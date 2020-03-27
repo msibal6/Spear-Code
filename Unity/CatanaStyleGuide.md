@@ -1,15 +1,16 @@
 # My Style Guide For C#
-how I code in C#
+how I code in C# for unity 
 
 ## Table Of Contents
 
-[Class Declaration](#Class-Declaration)
-
-[Comments](#Comments)
-
+* [Class Declaration](#Class-Declaration)
+* [Formatting](#Formatting)
+* [Comments](#Comments)
+	* [Comments Style](#Comments-Style)
+	* [Class Comments]($Class-Comments)
 ## Class Declaration
 
-### Member Declaration 
+### Data Member Declaration 
 
 Group similar declarations together, placing public parts earlier.  
 
