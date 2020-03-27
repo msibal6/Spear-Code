@@ -5,13 +5,12 @@ how I code in C# for unity
 
 * [Class Declaration](#Class-Declaration)
 * [Formatting](#Formatting)
+	* [Conditionals](#Conditionals)
 * [Comments](#Comments)
 	* [Comments Style](#Comments-Style)
 	* [Class Comments]($Class-Comments)
 
 ## Class Declaration
-
-***
 
 ### Data Member Declaration 
 
@@ -27,6 +26,20 @@ together, and generally prefer to sorted by: alphabetized type and similarity.
 ### Function Declaration
 
 Always declare protection level. 
+
+## Formatting 
+
+### Conditionals  
+
+Prefer no spaces inside parentheses. The if and else keywords belong on  
+separate lines.  
+
+Do not include spaces between the parentheses and the condition. Always include spaces between the if and opening parenthese, and between the closing  
+parenthese and the opening brace.  
+
+Single-line statements do require curly braces.  
+
+Leave an empty line in between new statements.  
 
 
 ## Comments
