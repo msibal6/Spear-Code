@@ -8,7 +8,10 @@ how I code in C# for unity
 * [Comments](#Comments)
 	* [Comments Style](#Comments-Style)
 	* [Class Comments]($Class-Comments)
+
 ## Class Declaration
+
+***
 
 ### Data Member Declaration 
 
