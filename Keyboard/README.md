@@ -13,5 +13,10 @@ the ANSI 104 form factor.
 ## Why  
 
 I do not think any of this stuff is particularly important but it is quite  
-fun to document the process. * say this in a a British accent. *
- 
+fun to document the process. * say this in a a British accent. *  
+
+## Progress  
+
+**3/28** I have finished wiring the ROW and COL of the keyboard. Waiting  
+for more hookup wire to wire them to the teensy. 
+
