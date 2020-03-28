@@ -1,0 +1,2 @@
+# Saving psd file from Keyboard directory
+*.jpg filter=lfs diff=lfs merge=lfs -text

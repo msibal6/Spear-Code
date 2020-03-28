@@ -3,15 +3,25 @@
    You must select Keyboard from the "Tools > USB Type" menu.
 */
 
+
 /* Forked by Mitchell Sibal
+   Not sure if this actually forked lol
    Version ANSI	104
 */
 
+/* List of changes made
+    changed NULL_KEY to KEY_NULL
+    update the refCode table
+    Deleted FN layout because I do not have FN key
+
+*/
 #include <Keyboard.h>
 
 // Comment this out to use QWERTY layout
 //#define USE_DVORAK
 
+// KEYS THAT MIGHT NOT WORK
+// backtick
 #define ARROW_UP_KEY    91
 #define ARROW_DOWN_KEY  112
 #define ARROW_LEFT_KEY  111
@@ -25,7 +35,7 @@
 #define SUPER_KEY       101
 #define CTRL_KEY        30
 #define ALT_KEY         100
-#define NULL_KEY        0x00
+#define KEY_NULL        0x00
 
 #ifndef KEY_BACKTICK
 #define KEY_BACKTICK 53
@@ -45,11 +55,20 @@ unsigned long lastFrame = 0;
 // DO NOT EDIT
 // The key code map of the board. I don't know why it's weird.
 // Need to debug some day.
+// Had to edit to fit my ANSI 104 keyboard
 char refCode[ROWS][COLS] = {
-  { 0 , 1 , 2 , 3 , 10, 11, 12, 13, 20, 21, 22, 23},
-  { 30, 31, 32, 40, 41, 42, 43, 50, 51, 52, 60, 61},
-  { 62, 63, 70, 71, 72, 80, 81, 82, 83, 90, 91, 92},
-  { 93, 100, 101, 102, 255, 103, 255, 110, 255, 111, 112, 113 }
+	{ 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 
+		16, 17, 18, 19, 20, 21},
+	{ 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 
+		38, 39, 40, 41, 42, 43}, 
+	{ 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+		60, 61, 62, 63, 64, 65},
+	{ 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+		82, 83, 84, 85, 86, 87},
+	{ 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103,
+		104, 105, 106, 107, 108, 109},
+	{ 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123,
+		124, 125, 126, 127, 128, 129, 130, 131}
 };
 
 #ifndef USE_DVORAK
@@ -59,18 +78,61 @@ char refCode[ROWS][COLS] = {
 uint8_t keyLayout[][ROWS][COLS] = {
   // Default layout
   {
-   { KEY_TAB  , KEY_Q   , KEY_W   , KEY_E   , KEY_R   , KEY_T   , KEY_Y   , KEY_U   , KEY_I    , KEY_O     , KEY_P        , KEY_BACKSLASH },
-   { NULL_KEY , KEY_A   , KEY_S   , KEY_D   , KEY_F   , KEY_G   , KEY_H   , KEY_J   , KEY_K    , KEY_L     , KEY_SEMICOLON, NULL_KEY      },
-   { NULL_KEY , KEY_Z   , KEY_X   , KEY_C   , KEY_V   , KEY_B   , KEY_N   , KEY_M   , KEY_COMMA, KEY_PERIOD, KEY_SLASH     , KEY_MINUS     },
-   { KEY_QUOTE, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY , KEY_LEFT_BRACE  , KEY_RIGHT_BRACE     , KEY_EQUAL      }
+    { KEY_ESC, KEY_NULL, KEY_F1, KEY_F2, KEY_F3, KEY_F4,  KEY_NULL, KEY_F5, 
+	KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_F12, 
+	KEY_PRINTSCREEN, KEY_SCROLL_LOCK, KEY_PAUSE, KEY_NULL, KEY_NULL, 
+	KEY_NULL, KEY_NULL}, 
+    { KEY_BACKTICK, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8,
+    KEY_9, KEY_0, KEY_MINUS, KEY_EQUAL, KEY_NULL, KEY_BACKSPACE, KEY_INSERT,
+    KEY_HOME, KEY_PAGE_UP, KEY_NUM_LOCK, KEYPAD_SLASH, KEYPAD_ASTERIX, 
+    KEYPAD_MINUS}, 
+    { KEY_TAB, KEY_NULL, KEY_Q, KEY_W, KEY_E, KEY_R, KEY_T, KEY_Y, KEY_U, 
+    KEY_I, KEY_O, KEY_P, KEY_LEFT_BRACE, KEY_RIGHT_BRACE, KEY_BACKSLASH, 
+    KEY_DELETE, KEY_END, KEY_PAGE_DOWN, KEYPAD_7, KEYPAD_8, KEYPAD_9, 
+    KEYPAD_PLUS},
+    { KEY_CAPS_LOCK, KEY_NULL, KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H, 
+    KEY_J, KEY_K, KEY_L, KEY_SEMICOLON, KEY_QUOTE, KEY_ENTER, KEY_NULL, 
+    KEY_NULL, KEY_NULL, KEY_NULL, KEYPAD_4, KEYPAD_5, KEYPAD_6, KEY_NULL},
+    { KEY_NULL, MODIFIERKEY_SHIFT, KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_N,
+    KEY_M, KEY_COMMA, KEY_PERIOD, KEY_SLASH, KEY_NULL,
+    MODIFIERKEY_RIGHT_SHIFT, KEY_NULL, KEY_NULL, KEY_UP, KEY_NULL, KEYPAD_1,
+    KEYPAD_1, KEYPAD_1, KEYPAD_ENTER},
+    {MODIFIERKEY_CTRL, MODIFIERKEY_GUI, KEY_NULL, MODIFIERKEY_ALT, KEY_NULL,
+    KEY_NULL, KEY_SPACE, KEY_NULL, KEY_NULL, KEY_NULL, MODIFIERKEY_RIGHT_ALT,
+    MODIFIERKEY_RIGHT_GUI, KEY_NULL, MODIFIERKEY_RIGHT_GUI, 
+    MODIFIERKEY_RIGHT_CTRL, KEY_LEFT, KEY_DOWN, KEY_RIGHT, KEYPAD_0,
+    KEY_NULL, KEYPAD_PERIOD, KEY_NULL}
+    
+	
+
   },
   // Fn layout
   {
-   { KEY_TILDE , KEY_1   , KEY_2   , KEY_3   , KEY_4   , KEY_5   , KEY_6   , KEY_7   , KEY_8    , KEY_9         , KEY_0          , KEY_BACKTICK },
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY , NULL_KEY, NULL_KEY, NULL_KEY  },
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY     , KEY_UP       , NULL_KEY },
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY , KEY_LEFT      , KEY_DOWN       , KEY_RIGHT  }
-  }
+   { KEY_ESC, KEY_NULL, KEY_F1, KEY_F2, KEY_F3, KEY_F4,  KEY_NULL, KEY_F5, 
+	KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_F12, 
+	KEY_PRINTSCREEN, KEY_SCROLL_LOCK, KEY_PAUSE, KEY_NULL, KEY_NULL, 
+	KEY_NULL, KEY_NULL}, 
+    { KEY_BACKTICK, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8,
+    KEY_9, KEY_0, KEY_MINUS, KEY_EQUAL, KEY_NULL, KEY_BACKSPACE, KEY_INSERT,
+    KEY_HOME, KEY_PAGE_UP, KEY_NUM_LOCK, KEYPAD_SLASH, KEYPAD_ASTERIX, 
+    KEYPAD_MINUS}, 
+    { KEY_TAB, KEY_NULL, KEY_Q, KEY_W, KEY_E, KEY_R, KEY_T, KEY_Y, KEY_U, 
+    KEY_I, KEY_O, KEY_P, KEY_LEFT_BRACE, KEY_RIGHT_BRACE, KEY_BACKSLASH, 
+    KEY_DELETE, KEY_END, KEY_PAGE_DOWN, KEYPAD_7, KEYPAD_8, KEYPAD_9, 
+    KEYPAD_PLUS},
+    { KEY_CAPS_LOCK, KEY_NULL, KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H, 
+    KEY_J, KEY_K, KEY_L, KEY_SEMICOLON, KEY_QUOTE, KEY_ENTER, KEY_NULL, 
+    KEY_NULL, KEY_NULL, KEY_NULL, KEYPAD_4, KEYPAD_5, KEYPAD_6, KEY_NULL},
+    { KEY_NULL, MODIFIERKEY_SHIFT, KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_N,
+    KEY_M, KEY_COMMA, KEY_PERIOD, KEY_SLASH, KEY_NULL,
+    MODIFIERKEY_RIGHT_SHIFT, KEY_NULL, KEY_NULL, KEY_UP, KEY_NULL, KEYPAD_1,
+    KEYPAD_1, KEYPAD_1, KEYPAD_ENTER},
+    {MODIFIERKEY_CTRL, MODIFIERKEY_GUI, KEY_NULL, MODIFIERKEY_ALT, KEY_NULL,
+    KEY_NULL, KEY_SPACE, KEY_NULL, KEY_NULL, KEY_NULL, MODIFIERKEY_RIGHT_ALT,
+    MODIFIERKEY_RIGHT_GUI, KEY_NULL, MODIFIERKEY_RIGHT_GUI, 
+    MODIFIERKEY_RIGHT_CTRL, KEY_LEFT, KEY_DOWN, KEY_RIGHT, KEYPAD_0,
+    KEY_NULL, KEYPAD_PERIOD, KEY_NULL}
+    
 };
 #else
 // DVORAK LAYOUT
@@ -78,17 +140,17 @@ uint8_t keyLayout[][ROWS][COLS] = {
   // Default layout
   {
    { KEY_TAB  , KEY_QUOTE    , KEY_COMMA, KEY_PERIOD, KEY_P   , KEY_Y   , KEY_F   , KEY_G   , KEY_C   , KEY_R   , KEY_L   , KEY_BACKSLASH },
-   { NULL_KEY , KEY_A        , KEY_O    , KEY_E     , KEY_U   , KEY_I   , KEY_D   , KEY_H   , KEY_T   , KEY_N   , KEY_S   , NULL_KEY      },
-   { NULL_KEY , KEY_SEMICOLON, KEY_Q    , KEY_J     , KEY_K   , KEY_X   , KEY_B   , KEY_M   , KEY_W   , KEY_V   , NULL_KEY, KEY_Z         },
-   { KEY_TILDE, NULL_KEY     , NULL_KEY , NULL_KEY  , NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY      }
+   { KEY_NULL , KEY_A        , KEY_O    , KEY_E     , KEY_U   , KEY_I   , KEY_D   , KEY_H   , KEY_T   , KEY_N   , KEY_S   , KEY_NULL      },
+   { KEY_NULL , KEY_SEMICOLON, KEY_Q    , KEY_J     , KEY_K   , KEY_X   , KEY_B   , KEY_M   , KEY_W   , KEY_V   , KEY_NULL, KEY_Z         },
+   { KEY_TILDE, KEY_NULL     , KEY_NULL , KEY_NULL  , KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL      }
   },
   // Fn layout
   // Will not be using this FN layout
   {
    { KEY_ESC , KEY_1   , KEY_2   , KEY_3   , KEY_4   , KEY_5   , KEY_6   , KEY_7   , KEY_8    , KEY_9    , KEY_0    , KEY_LEFT_BRACE },
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, KEY_SLASH, KEY_EQUAL, KEY_MINUS, NULL_KEY       },
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY , NULL_KEY , NULL_KEY , KEY_RIGHT_BRACE},
-   { NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY, NULL_KEY , NULL_KEY , NULL_KEY , NULL_KEY       }
+   { KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_SLASH, KEY_EQUAL, KEY_MINUS, KEY_NULL       },
+   { KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL , KEY_NULL , KEY_NULL , KEY_RIGHT_BRACE},
+   { KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL, KEY_NULL , KEY_NULL , KEY_NULL , KEY_NULL       }
   }
 };
 #endif
@@ -138,7 +200,7 @@ struct Key* readKey() {
       if (digitalRead(colPins[col]) == LOW) {
         result[cur].row = row;
         result[cur].col = col;
-        result[cur].code = col * 10 + row;
+        result[cur].code = col + row * 22;
         if (cur < MAXIMUM_STROKES) cur++;
       }
     }
@@ -207,7 +269,7 @@ void submitLayout(struct Key* keys, uint8_t layout[ROWS][COLS]) {
       if (keys[i].code != -1) {
         struct Point pos = keyToPoint(keys[i].code);
         int c = layout[pos.r][pos.c];
-        if (c != NULL_KEY) {
+        if (c != KEY_NULL) {
           setKey(rolloverCount, c);
           rolloverCount++;
         }
