@@ -30,5 +30,5 @@ for more hookup wire to wire them to the teensy. Finished configuration of `firm
 
 ## Helpful Links
 
-* [Swillkb (Plate Generator](http://builder.swillkb.com/)
+* [Swillkb (Plate Generator)](http://builder.swillkb.com/)
 
