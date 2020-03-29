@@ -1,2 +1,2 @@
 # Spear-Code
-How I code in general 
+Different Personal Projects
