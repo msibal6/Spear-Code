@@ -28,3 +28,7 @@ and scrutinize in order to improve.
 * **3/28** I have finished wiring the ROW and COL of the keyboard. Waiting  
 for more hookup wire to wire them to the teensy. Finished configuration of `firmware.ino` to fit my keyboard.
 
+## Helpful Links
+
+* [Swillkb (Plate Generator](http://builder.swillkb.com/)
+
