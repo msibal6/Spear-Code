@@ -1,6 +1,9 @@
 # Keyboard 
-This is the firmware that I adapted from @huytd for their snackymini  
-keyboard. That's about it.  
+This is my project to handwire a keyboard
+
+## Source Code 
+
+I adapted this code from @huytd snackymini-keyboard project. [see the original](#https://github.com/huytd/snackymini-keyboard)
 
 ## Details  
 Firmware is for a Dell-AT101 keyboard. It is a ANSI 104 keyboard.  
