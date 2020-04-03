@@ -3,8 +3,9 @@ This is my project to handwire a keyboard
 
 ## Source Code 
 
-I adapted this code from @huytd 's snackymini-keyboard project. Big thanks to them! I would not know where to start  
-with all the firmware stuff. [See the original!](https://github.com/huytd/snackymini-keyboard)
+I adapted this code from @huytd 's snackymini-keyboard project. Big thanks  
+to them! I would not know where to start  with all the firmware stuff.  
+[See the original!](https://github.com/huytd/snackymini-keyboard)
 
 ## Details  
 Firmware is for a Dell-AT101 keyboard. It is a ANSI 104 keyboard.  
@@ -33,7 +34,9 @@ for more hookup wire to wire them to the teensy. Finished configuration
 firmware and now IM TYYPING ON IT!!! LETS GOO.
 There were a few things that needed tweaking in  the modifier keys. I  
 fixed those and now, the only thing that needs to be fixed is the solder  
-connection on my 7+1 switch and this keyboard will be as good as new.
+connection on my 7+1 switch and this keyboard will be as good as new. I  
+am excited to make my next keyboard already, and i will handwire it again 
+lol 
 
 ## Helpful Links
 
