@@ -1,4 +1,4 @@
-/* SnackyMini Keyboard Firmware
+/* SnackyMini Keyboad Firmware
    By @huydotnet
    You must select Keyboard from the "Tools > USB Type" menu.
 */
@@ -22,20 +22,25 @@
 
 // KEYS THAT MIGHT NOT WORK
 // backtick
+// 
 #define ARROW_UP_KEY    91
 #define ARROW_DOWN_KEY  112
 #define ARROW_LEFT_KEY  111
 #define ARROW_RIGHT_KEY 113
-#define SHIFT_KEY       62
+#define SHIFT_KEY       89//62
+#define RIGHT_SHIFT_KEY 101
 #define MENU_KEY        93
 #define FN_KEY          110
 #define BACKSPACE_KEY   61
 #define ENTER_KEY       102
 #define TAB_KEY         103
-#define SUPER_KEY       101
-#define CTRL_KEY        30
-#define ALT_KEY         100
-#define KEY_NULL        0x00
+#define SUPER_KEY       111
+#define RIGHT_SUPER_KEY 121
+#define CTRL_KEY        110
+#define RIGHT_CTRL_KEY  124
+#define ALT_KEY         113
+#define RIGHT_ALT_KEY   120
+#define KEY_NULL        0
 
 #ifndef KEY_BACKTICK
 #define KEY_BACKTICK 53
@@ -75,13 +80,15 @@ char refCode[ROWS][COLS] = {
 // QWERTY LAYOUT
 // TODO 
 // Add my six ROW and 22 COL
+//uint8_t
+// int
 uint8_t keyLayout[][ROWS][COLS] = {
   // Default layout
   {
     { KEY_ESC, KEY_NULL, KEY_F1, KEY_F2, KEY_F3, KEY_F4,  KEY_NULL, KEY_F5, 
-	KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_F12, 
-	KEY_PRINTSCREEN, KEY_SCROLL_LOCK, KEY_PAUSE, KEY_NULL, KEY_NULL, 
-	KEY_NULL, KEY_NULL}, 
+	  KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_F12, 
+	  KEY_PRINTSCREEN, KEY_SCROLL_LOCK, KEY_PAUSE, KEY_NULL, KEY_NULL, 
+	  KEY_NULL, KEY_NULL}, 
     { KEY_BACKTICK, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8,
     KEY_9, KEY_0, KEY_MINUS, KEY_EQUAL, KEY_NULL, KEY_BACKSPACE, KEY_INSERT,
     KEY_HOME, KEY_PAGE_UP, KEY_NUM_LOCK, KEYPAD_SLASH, KEYPAD_ASTERIX, 
@@ -93,10 +100,10 @@ uint8_t keyLayout[][ROWS][COLS] = {
     { KEY_CAPS_LOCK, KEY_NULL, KEY_A, KEY_S, KEY_D, KEY_F, KEY_G, KEY_H, 
     KEY_J, KEY_K, KEY_L, KEY_SEMICOLON, KEY_QUOTE, KEY_ENTER, KEY_NULL, 
     KEY_NULL, KEY_NULL, KEY_NULL, KEYPAD_4, KEYPAD_5, KEYPAD_6, KEY_NULL},
-    { KEY_NULL, MODIFIERKEY_SHIFT, KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_N,
+    { KEY_NULL, KEY_NULL, KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_N,
     KEY_M, KEY_COMMA, KEY_PERIOD, KEY_SLASH, KEY_NULL,
-    MODIFIERKEY_RIGHT_SHIFT, KEY_NULL, KEY_NULL, KEY_UP, KEY_NULL, KEYPAD_1,
-    KEYPAD_1, KEYPAD_1, KEYPAD_ENTER},
+    KEY_NULL, KEY_NULL, KEY_NULL, KEY_UP, KEY_NULL, KEYPAD_1,
+    KEYPAD_2, KEYPAD_3, KEYPAD_ENTER},
     {MODIFIERKEY_CTRL, MODIFIERKEY_GUI, KEY_NULL, MODIFIERKEY_ALT, KEY_NULL,
     KEY_NULL, KEY_SPACE, KEY_NULL, KEY_NULL, KEY_NULL, MODIFIERKEY_RIGHT_ALT,
     MODIFIERKEY_RIGHT_GUI, KEY_NULL, MODIFIERKEY_RIGHT_GUI, 
@@ -132,7 +139,7 @@ uint8_t keyLayout[][ROWS][COLS] = {
     MODIFIERKEY_RIGHT_GUI, KEY_NULL, MODIFIERKEY_RIGHT_GUI, 
     MODIFIERKEY_RIGHT_CTRL, KEY_LEFT, KEY_DOWN, KEY_RIGHT, KEYPAD_0,
     KEY_NULL, KEYPAD_PERIOD, KEY_NULL}
-    
+  }
 };
 #else
 // DVORAK LAYOUT
@@ -156,8 +163,8 @@ uint8_t keyLayout[][ROWS][COLS] = {
 #endif
 
 // TODO assign rowPins and colPins after wiring teensy 3.2 to keyboard
-int rowPins[ROWS] = { 23, 22, 21, 20 };
-int colPins[COLS] = { 19, 18, 17, 16, 15, 12, 11, 10, 9, 8, 7, 6 };
+int rowPins[ROWS] = { 0, 23, 22, 20, 21, 17 };
+int colPins[COLS] = { 25, 26, 24, 28, 27, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 14, 15, 16, 18, 19 };
 
 struct Key {
   int row;
@@ -247,15 +254,29 @@ void submitLayout(struct Key* keys, uint8_t layout[ROWS][COLS]) {
     if (keys[i].code == SUPER_KEY) {
       modifiers |= MODIFIERKEY_GUI;
     }
+    else if (keys[i].code == RIGHT_SUPER_KEY) {
+      modifiers |= MODIFIERKEY_RIGHT_GUI;
+    }
     else if (keys[i].code == CTRL_KEY) {
       modifiers |= MODIFIERKEY_CTRL;
+    }
+    else if (keys[i].code == RIGHT_CTRL_KEY) {
+      modifiers |= MODIFIERKEY_RIGHT_CTRL;
     }
     else if (keys[i].code == ALT_KEY) {
       modifiers |= MODIFIERKEY_ALT;
     }
+    else if (keys[i].code == RIGHT_ALT_KEY) {
+      modifiers |= MODIFIERKEY_RIGHT_ALT;
+    }
     else if (keys[i].code == SHIFT_KEY) {
       modifiers |= MODIFIERKEY_SHIFT;
     }
+    // mitchell addition
+    else if (keys[i].code == RIGHT_SHIFT_KEY) {
+      modifiers |= MODIFIERKEY_RIGHT_SHIFT;
+    }
+    
     else if (keys[i].code == BACKSPACE_KEY) {
       Keyboard.set_key1(KEY_BACKSPACE);
     }
@@ -289,7 +310,7 @@ void keySubmit(struct Key* keys) {
       layoutId = FN_LAYOUT; break;
     }
   }
-  submitLayout(keys, keyLayout[layoutId]);
+  submitLayout(keys, keyLayout[0]);
 }
 
 /* Life Cycle Functions */
