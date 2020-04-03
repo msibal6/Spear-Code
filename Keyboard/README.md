@@ -26,9 +26,17 @@ and scrutinize in order to improve.
 ## Progress  
 
 * **3/28** I have finished wiring the ROW and COL of the keyboard. Waiting  
-for more hookup wire to wire them to the teensy. Finished configuration of `firmware.ino` to fit my keyboard.
+for more hookup wire to wire them to the teensy. Finished configuration  
+ of `firmware.ino` to fit my keyboard.
+
+* **4/3** I wired the teensy to my wirings last night. Today I tested the  
+firmware and now IM TYYPING ON IT!!! LETS GOO.
+There were a few things that needed tweaking in  the modifier keys. I  
+fixed those and now, the only thing that needs to be fixed is the solder  
+connection on my 7+1 switch and this keyboard will be as good as new.
 
 ## Helpful Links
 
+* [Kribbit's Handwiring guide](https://geekhack.org/index.php?topic=87689.0)
 * [Swillkb (Plate Generator)](http://builder.swillkb.com/)
 
