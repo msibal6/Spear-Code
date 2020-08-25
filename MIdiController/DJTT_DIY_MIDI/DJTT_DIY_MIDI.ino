@@ -7,8 +7,6 @@ int inputAnalog[analogInputs];
 int iAlag[analogInputs];
 // make array of cc values
 int ccValue[analogInputs];
-// index variable for loop
-int i;
 
 // cc values for buttons
 int cc_off = 0;
@@ -22,14 +20,16 @@ int cc2 = 53;
 int cc3 = 54;
 
 
-Bounce button0 = Bounce(0, 3);
-Bounce button1 = Bounce(1, 3);
-Bounce button2 = Bounce(2, 3);
-Bounce button3 = Bounce(3, 3);
 
+Bounce but4 = Bounce( 1, 5);
+Bounce but3 = Bounce( 2, 5);
+Bounce but2 = Bounce( 3, 5);
+Bounce but1 = Bounce( 4, 5);
 
-
-
+Bounce but5 = Bounce(9, 5);
+Bounce but6 = Bounce(8, 5);
+Bounce but7 = Bounce(7, 5);
+Bounce but8 = Bounce(6, 5);
 
 
 void setup() {
@@ -49,9 +49,24 @@ void setup() {
   pinMode(11, INPUT_PULLUP);
 }
 
+
 void loop() {
   // loop trough active inputs for knobs
-  for (i=0;i<analogInputs;i++){
+//
+//  in = analogRead(8);
+//  if (abs(in - store) > 7) {
+//    value = in/8;
+//  }
+////  Serial.println(value);
+//  usbMIDI.sendControlChange(1, value, 2);
+//  store = in;
+//    digitalWrite(ledPin, HIGH);   // set the LED on
+//  delay(500);                  // wait for a second
+//  digitalWrite(ledPin, LOW);    // set the LED off
+//  delay(5i00);
+//  delay(1000);    
+  
+  for ( int i=1;i<=analogInputs;i++){
     // read current value at i-th input
     inputAnalog[i] = analogRead(i);
     // if magnitude of difference is 8 or more...
@@ -59,53 +74,96 @@ void loop() {
       // calc the CC value based on the raw value
       ccValue[i] = inputAnalog[i]/8;
       // send the MIDI
-      usbMIDI.sendControlChange(i, ccValue[i], 3);
+      usbMIDI.sendControlChange(i, ccValue[i], i);
       // set raw reading to lagged array for next comparison
       iAlag[i] = inputAnalog[i];
+    } else {
+      continue;
     }
   delay(5); // limits MIDI messages to reasonable number
   }
-  
-  // Push Button code
-  button0.update();
-  button1.update();
-  button2.update();
-  button3.update();
+  while (usbMIDI.read());
 
- 
-   if (button0.fallingEdge())
+
+
+  but1.update();
+  but2.update();
+  but3.update();
+  but4.update();
+  but5.update();
+  but6.update();
+  but7.update();
+  but8.update();
+
+
+
+ // Pressing the buttons
+   if (but1.fallingEdge())
   {
-    usbMIDI.sendControlChange(cc0, cc_on, 3);
+    usbMIDI.sendNoteOn(60, 99, 3);  // 60 = C4  
   }
-  if (button1.fallingEdge())
+  if (but2.fallingEdge())
   {
-    usbMIDI.sendControlChange(cc1, cc_on, 3);
+    usbMIDI.sendNoteOn(61, 99, 3);  // 60 = C4  
   }
-  if (button2.fallingEdge())
+  if (but3.fallingEdge())
   {
-    usbMIDI.sendControlChange(cc2, cc_on, 3);
+    usbMIDI.sendNoteOn(62, 99, 3);  // 60 = C4  
   }
-  if (button3.fallingEdge())
+  if (but4.fallingEdge())
   {
-    usbMIDI.sendControlChange(cc3, cc_on, 3);
+    usbMIDI.sendNoteOn(63, 99, 3);  // 60 = C4  
+  }
+  if (but5.fallingEdge())
+  {
+    usbMIDI.sendNoteOn(64, 99, 3);  // 60 = C4  
+  }
+  if (but6.fallingEdge())
+  {
+    usbMIDI.sendNoteOn(65, 99, 3);  // 60 = C4  
+  }
+  if (but7.fallingEdge())
+  {
+    usbMIDI.sendNoteOn(66, 99, 3);  // 60 = C4  
+  }
+  if (but8.fallingEdge())
+  {
+    usbMIDI.sendNoteOn(67, 99, 3);  // 60 = C4  
   }
 
-   
-  if (button0.risingEdge())
+ // releasing the buttons
+
+  if (but1.risingEdge())
   {
-    usbMIDI.sendControlChange(cc0, cc_off, 3);
+    usbMIDI.sendNoteOff(60, 0, 3);  // 60 = C4  
   }
-  if (button1.risingEdge())
+  if (but2.risingEdge())
   {
-    usbMIDI.sendControlChange(cc1, cc_off, 3);
+    usbMIDI.sendNoteOff(61, 0, 3);  // 60 = C4  
   }
-  if (button2.risingEdge())
+  if (but3.risingEdge())
   {
-    usbMIDI.sendControlChange(cc2, cc_off, 3);
+    usbMIDI.sendNoteOff(62, 0, 3);  // 60 = C4  
   }
-  if (button3.risingEdge())
+  if (but4.risingEdge())
   {
-    usbMIDI.sendControlChange(cc3, cc_off, 3);
+    usbMIDI.sendNoteOff(63, 0, 3);  // 60 = C4  
+  }
+  if (but5.risingEdge())
+  {
+    usbMIDI.sendNoteOff(64, 0, 3);  // 60 = C4  
+  }
+  if (but6.risingEdge())
+  {
+    usbMIDI.sendNoteOff(65, 0, 3);  // 60 = C4  
+  }
+  if (but7.risingEdge())
+  {
+    usbMIDI.sendNoteOff(66, 0, 3);  // 60 = C4  
+  }
+  if (but8.risingEdge())
+  {
+    usbMIDI.sendNoteOff(67, 0, 3);  // 60 = C4  
   }
   
 }
