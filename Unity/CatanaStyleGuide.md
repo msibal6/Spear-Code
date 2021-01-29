@@ -1,5 +1,6 @@
 # My Style Guide For C#
-how I code in C# for unity 
+# How I code in C# for unity 
+## This is under continual revision because I realized I really know very little
 
 ## Table Of Contents
 
@@ -15,8 +16,6 @@ how I code in C# for unity
 ### Data Member Declaration 
 
 Group similar declarations together, placing public parts earlier.  
-
-
 A class definition should usually start with a public section and then private.  
 
 
@@ -34,10 +33,10 @@ Always declare protection level.
 Prefer no spaces inside parentheses. The if and else keywords belong on  
 separate lines.  
 
-Do not include spaces between the parentheses and the condition. Always include spaces between the if and opening parenthese, and between the closing  
+Do not include spaces between the parentheses and the condition. Always include spaces between the if and opening pararentheses, and between the closing  
 parenthese and the opening brace.  
 
-Single-line statements do require curly braces.  
+Single-line statements do not require braces
 
 Leave an empty line in between new statements.  
 
@@ -50,8 +49,8 @@ variables, and functions.
 ### Comments Style   
 Use the `//` style. 
 
-When commenting before a line of code, comment right on top of the line of  
-cod, and leave an empty line between the comment and the previous line of code. 
+When commenting a line of code, comment right on top of the line of  
+code, and leave an empty line between the comment and the previous line of code. 
 When commenting inline, comment a space after the code.  
 
 ### Class Comments
