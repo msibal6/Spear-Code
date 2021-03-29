@@ -1,4 +1,4 @@
 # Spear-Code
-Wow I just learned that this is called a monorepo because I use this thing to
-hold many differnt projects despite it being only one repo
-Different coding projects by Mitchell Sibal
+Monorepo for all different coding projects by Mitchell Sibal
+
+ - That are supported natively by git and github
