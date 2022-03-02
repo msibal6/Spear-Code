@@ -1,12 +1,13 @@
 #include <Bounce.h>
 
+// Firmware for Hernan's birthday controller
 // define how many pots are active up to number of available analog inputs
-#define analogInputs 8
+#define ANALOG_INPUTS 8
 // make arrays for input values and lagged input values
-int inputAnalog[analogInputs];
-int iAlag[analogInputs];
+int inputAnalog[ANALOG_INPUTS];
+int iAlag[ANALOG_INPUTS];
 // make array of cc values
-int ccValue[analogInputs];
+int ccValue[ANALOG_INPUTS];
 
 // cc values for buttons
 int cc_off = 0;
@@ -19,18 +20,14 @@ int cc1 = 52;
 int cc2 = 53;
 int cc3 = 54;
 
-
-
 Bounce but4 = Bounce( 1, 5);
 Bounce but3 = Bounce( 2, 5);
 Bounce but2 = Bounce( 3, 5);
 Bounce but1 = Bounce( 4, 5);
-
 Bounce but5 = Bounce(9, 5);
 Bounce but6 = Bounce(8, 5);
 Bounce but7 = Bounce(7, 5);
 Bounce but8 = Bounce(6, 5);
-
 
 void setup() {
   // MIDI rate
@@ -49,24 +46,8 @@ void setup() {
   pinMode(11, INPUT_PULLUP);
 }
 
-
 void loop() {
-  // loop trough active inputs for knobs
-//
-//  in = analogRead(8);
-//  if (abs(in - store) > 7) {
-//    value = in/8;
-//  }
-////  Serial.println(value);
-//  usbMIDI.sendControlChange(1, value, 2);
-//  store = in;
-//    digitalWrite(ledPin, HIGH);   // set the LED on
-//  delay(500);                  // wait for a second
-//  digitalWrite(ledPin, LOW);    // set the LED off
-//  delay(5i00);
-//  delay(1000);    
-  
-  for ( int i=1;i<=analogInputs;i++){
+  for (int i = 1; i <= ANALOG_INPUTS; i++) {
     // read current value at i-th input
     inputAnalog[i] = analogRead(i);
     // if magnitude of difference is 8 or more...
@@ -84,8 +65,6 @@ void loop() {
   }
   while (usbMIDI.read());
 
-
-
   but1.update();
   but2.update();
   but3.update();
@@ -95,75 +74,55 @@ void loop() {
   but7.update();
   but8.update();
 
-
-
- // Pressing the buttons
-   if (but1.fallingEdge())
-  {
+  // Pressing the buttons
+  if (but1.fallingEdge()) {
     usbMIDI.sendNoteOn(60, 99, 3);  // 60 = C4  
   }
-  if (but2.fallingEdge())
-  {
+  if (but2.fallingEdge()) {
     usbMIDI.sendNoteOn(61, 99, 3);  // 60 = C4  
   }
-  if (but3.fallingEdge())
-  {
+  if (but3.fallingEdge()) {
     usbMIDI.sendNoteOn(62, 99, 3);  // 60 = C4  
   }
-  if (but4.fallingEdge())
-  {
+  if (but4.fallingEdge()) {
     usbMIDI.sendNoteOn(63, 99, 3);  // 60 = C4  
   }
-  if (but5.fallingEdge())
-  {
+  if (but5.fallingEdge()) {
     usbMIDI.sendNoteOn(64, 99, 3);  // 60 = C4  
   }
-  if (but6.fallingEdge())
-  {
+  if (but6.fallingEdge()) {
     usbMIDI.sendNoteOn(65, 99, 3);  // 60 = C4  
   }
-  if (but7.fallingEdge())
-  {
+  if (but7.fallingEdge()) {
     usbMIDI.sendNoteOn(66, 99, 3);  // 60 = C4  
   }
-  if (but8.fallingEdge())
-  {
+  if (but8.fallingEdge()) {
     usbMIDI.sendNoteOn(67, 99, 3);  // 60 = C4  
   }
 
- // releasing the buttons
-
-  if (but1.risingEdge())
-  {
+  // releasing the buttons
+  if (but1.risingEdge()) {
     usbMIDI.sendNoteOff(60, 0, 3);  // 60 = C4  
   }
-  if (but2.risingEdge())
-  {
+  if (but2.risingEdge()) {
     usbMIDI.sendNoteOff(61, 0, 3);  // 60 = C4  
   }
-  if (but3.risingEdge())
-  {
+  if (but3.risingEdge()) {
     usbMIDI.sendNoteOff(62, 0, 3);  // 60 = C4  
   }
-  if (but4.risingEdge())
-  {
+  if (but4.risingEdge()) {
     usbMIDI.sendNoteOff(63, 0, 3);  // 60 = C4  
   }
-  if (but5.risingEdge())
-  {
+  if (but5.risingEdge()) {
     usbMIDI.sendNoteOff(64, 0, 3);  // 60 = C4  
   }
-  if (but6.risingEdge())
-  {
+  if (but6.risingEdge()) {
     usbMIDI.sendNoteOff(65, 0, 3);  // 60 = C4  
   }
-  if (but7.risingEdge())
-  {
+  if (but7.risingEdge()) {
     usbMIDI.sendNoteOff(66, 0, 3);  // 60 = C4  
   }
-  if (but8.risingEdge())
-  {
+  if (but8.risingEdge()) {
     usbMIDI.sendNoteOff(67, 0, 3);  // 60 = C4  
   }
-  
 }

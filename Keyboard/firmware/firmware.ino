@@ -160,7 +160,6 @@ uint8_t keyLayout[][ROWS][COLS] = {
 };
 #endif
 
-// TODO assign rowPins and colPins after wiring teensy 3.2 to keyboard
 int rowPins[ROWS] = { 0, 23, 22, 20, 21, 17};
 int colPins[COLS] = { 25, 26, 24, 28, 27, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 14, 15, 16, 18, 19 };
 
